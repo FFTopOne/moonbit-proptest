@@ -1,0 +1,32 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moonbit-proptest/stateful"
+
+import {
+  "moonbit-community/moonbit-proptest/gen",
+  "moonbit-community/moonbit-proptest/prop",
+}
+
+// Values
+pub fn[S, C] check_machine(Machine[S, C], config? : @prop.Config) -> @prop.Outcome[Array[C]]
+
+// Errors
+pub suberror CounterMismatch {
+  CounterMismatch(String)
+}
+
+// Types and methods
+pub struct Machine[S, C] {
+  initial : S
+  reset : () -> Unit raise
+  generate : (S) -> @gen.Gen[C]
+  apply : (S, C) -> S
+  execute : (C) -> Unit raise
+  verify : (S) -> Unit raise
+}
+pub fn[S, C] Machine::new(initial~ : S, reset~ : () -> Unit raise, generate~ : (S) -> @gen.Gen[C], apply~ : (S, C) -> S, execute~ : (C) -> Unit raise, verify~ : (S) -> Unit raise) -> Self[S, C]
+pub fn[S, C] Machine::run_sequence(Self[S, C], Array[C]) -> Unit raise
+pub fn[S, C] Machine::sequence(Self[S, C]) -> @gen.Gen[Array[C]]
+
+// Type aliases
+
+// Traits

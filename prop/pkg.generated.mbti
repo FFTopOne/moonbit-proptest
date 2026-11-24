@@ -1,0 +1,52 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moonbit-proptest/prop"
+
+import {
+  "moonbit-community/moonbit-proptest/gen",
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub const DEFAULT_SEED : UInt64 = 0x5EED2026
+
+pub fn[T] check(@gen.Gen[T], (T) -> Bool, config? : Config) -> Outcome[T]
+
+pub fn[T] check_raise(@gen.Gen[T], (T) -> Unit raise, config? : Config) -> Outcome[T]
+
+pub fn format_path(Array[Int32]) -> String
+
+pub fn[T] replay(@gen.Gen[T], Replay) -> T?
+
+pub fn size_at(Int32, Int32, Int32) -> Int32
+
+// Errors
+
+// Types and methods
+pub struct Config {
+  count : Int32
+  max_size : Int32
+  seed : UInt64
+  max_steps : Int32
+  max_attempts : Int32
+  discard_limit : Int32
+}
+pub fn Config::new(count? : Int32, max_size? : Int32, seed? : UInt64, max_steps? : Int32, max_attempts? : Int32, discard_limit? : Int32) -> Self
+
+pub enum Outcome[T] {
+  Passed(tests~ : Int32, discarded~ : Int32)
+  GaveUp(tests~ : Int32, discarded~ : Int32)
+  Falsified(counterexample~ : T, cause~ : String?, case_seed~ : UInt64, size~ : Int32, path~ : Array[Int32], tests~ : Int32, discarded~ : Int32, steps~ : Int32, attempts~ : Int32, truncated~ : Bool)
+}
+pub fn[T] Outcome::describe(Self[T], (T) -> String) -> String
+pub fn[T : @debug.Debug] Outcome::describe_with_debug(Self[T]) -> String
+pub fn[T] Outcome::to_replay(Self[T]) -> Replay?
+
+pub struct Replay {
+  case_seed : UInt64
+  size : Int32
+  path : Array[Int32]
+}
+
+// Type aliases
+
+// Traits

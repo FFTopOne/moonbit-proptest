@@ -1,0 +1,28 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moonbit-proptest/tree"
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Tree[T] {
+  value : T
+  kids : () -> Array[Tree[T]]
+}
+pub fn[T] Tree::children(Self[T]) -> Array[Self[T]]
+pub fn[T] Tree::filter(Self[T], (T) -> Bool) -> Self[T]
+pub fn[T] Tree::follow(Self[T], Array[Int32]) -> Self[T]?
+pub fn[T] Tree::is_leaf(Self[T]) -> Bool
+pub fn[T] Tree::lazy_node(T, () -> Array[Self[T]]) -> Self[T]
+pub fn[T, U] Tree::map(Self[T], (T) -> U) -> Self[U]
+pub fn[T] Tree::node(T, Array[Self[T]]) -> Self[T]
+pub fn[T] Tree::shape(Self[T], (T) -> String, depth? : Int32) -> String
+pub fn[T] Tree::singleton(T) -> Self[T]
+pub fn[T] Tree::size_upto(Self[T], Int32) -> Int32
+pub fn[T] Tree::unfold(T, (T) -> Array[T]) -> Self[T]
+pub fn[A, B, C] Tree::zip_with(Self[A], Self[B], (A, B) -> C) -> Self[C]
+
+// Type aliases
+
+// Traits

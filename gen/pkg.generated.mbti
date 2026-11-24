@@ -1,0 +1,52 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moonbit-proptest/gen"
+
+import {
+  "moonbit-community/moonbit-proptest/rng",
+  "moonbit-community/moonbit-proptest/tree",
+}
+
+// Values
+pub fn bool() -> Gen[Bool]
+
+pub fn char() -> Gen[Char]
+
+pub fn[T] frequency(Array[(Int32, Gen[T])]) -> Gen[T]
+
+pub fn int() -> Gen[Int32]
+
+pub fn int_range(Int32, Int32) -> Gen[Int32]
+
+pub fn shrink_towards(Int32, Int32) -> Array[Int32]
+
+pub fn string() -> Gen[String]
+
+// Errors
+
+// Types and methods
+pub struct Gen[T] {
+  run : (Int32, @rng.Rng) -> @tree.Tree[T]?
+}
+pub fn[T] Gen::array_of(Self[T]) -> Self[Array[T]]
+pub fn[T] Gen::array_with_size(Self[T], Int32) -> Self[Array[T]]
+pub fn[T] Gen::filter(Self[T], (T) -> Bool, attempts? : Int32) -> Self[T]
+pub fn[T, U] Gen::flat_map(Self[T], (T) -> Self[U]) -> Self[U]
+pub fn[T, U] Gen::map(Self[T], (T) -> U) -> Self[U]
+pub fn[T] Gen::new((Int32, @rng.Rng) -> @tree.Tree[T]?) -> Self[T]
+pub fn[T] Gen::one_of(Array[Self[T]]) -> Self[T]
+pub fn[T] Gen::option_of(Self[T]) -> Self[T?]
+pub fn[T] Gen::pure(T) -> Self[T]
+pub fn[T] Gen::reject() -> Self[T]
+pub fn[T] Gen::resize(Self[T], Int32) -> Self[T]
+pub fn[T, E] Gen::result_of(Self[T], Self[E]) -> Self[Result[T, E]]
+pub fn[T] Gen::run(Self[T], Int32, @rng.Rng) -> @tree.Tree[T]?
+pub fn[T] Gen::sample(Self[T], seed? : UInt64, size? : Int32) -> T?
+pub fn[T] Gen::samples(Self[T], count? : Int32, seed? : UInt64, size? : Int32) -> Array[T]
+pub fn[T] Gen::scale(Self[T], (Int32) -> Int32) -> Self[T]
+pub fn[T] Gen::sized((Int32) -> Self[T]) -> Self[T]
+pub fn[T, U] Gen::zip(Self[T], Self[U]) -> Self[(T, U)]
+pub fn[T, U, V] Gen::zip_with(Self[T], Self[U], (T, U) -> V) -> Self[V]
+
+// Type aliases
+
+// Traits

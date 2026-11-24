@@ -1,0 +1,5 @@
+import {
+  "moonbit-community/moonbit-proptest/examples",
+}
+
+pkgtype(kind: "executable")

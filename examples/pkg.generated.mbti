@@ -1,0 +1,15 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moonbit-proptest/examples"
+
+// Values
+pub fn is_sorted_public(Array[Int32]) -> Bool
+
+pub fn run_all() -> String
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

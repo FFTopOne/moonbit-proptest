@@ -1,0 +1,25 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbit-community/moonbit-proptest/rng"
+
+// Values
+pub fn derive_seed(UInt64, Int32) -> UInt64
+
+pub fn mix64(UInt64) -> UInt64
+
+// Errors
+
+// Types and methods
+pub struct Rng {
+  mut state : UInt64
+}
+pub fn Rng::new(UInt64) -> Self
+pub fn Rng::next_below(Self, UInt32) -> UInt32
+pub fn Rng::next_bool(Self) -> Bool
+pub fn Rng::next_int(Self) -> Int32
+pub fn Rng::next_uint64(Self) -> UInt64
+pub fn Rng::split(Self) -> Self
+pub fn Rng::state_of(Self) -> UInt64
+
+// Type aliases
+
+// Traits
