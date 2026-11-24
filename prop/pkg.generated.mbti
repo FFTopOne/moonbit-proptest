@@ -1,8 +1,8 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moonbit-proptest/prop"
+package "FFTopOne/moonbit-proptest/prop"
 
 import {
-  "moonbit-community/moonbit-proptest/gen",
+  "FFTopOne/moonbit-proptest/gen",
   "moonbitlang/core/debug",
 }
 

@@ -245,7 +245,7 @@ priv enum CounterCommand {
   Increment
   Decrement
   AddTo(Int32)
-} derive(Debug, Eq)
+}
 
 ///|
 /// A counter whose decrement path is missing its zero guard.
@@ -496,7 +496,13 @@ test "a shrunk sequence replays from its recorded path" {
   match outcome {
     @prop.Falsified(counterexample~, ..) => {
       let record = outcome.to_replay().unwrap()
-      assert_eq(@prop.replay(generator, record).unwrap(), counterexample)
+      // Compared through the renderer rather than `assert_eq`: the command type
+      // is private to this package, and deriving `Debug`/`Eq` on it only to
+      // satisfy one assertion would widen the surface for no benefit.
+      assert_eq(
+        show_commands(@prop.replay(generator, record).unwrap()),
+        show_commands(counterexample),
+      )
     }
     _ => abort("expected a failure")
   }

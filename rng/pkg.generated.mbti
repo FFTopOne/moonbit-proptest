@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moonbit-proptest/rng"
+package "FFTopOne/moonbit-proptest/rng"
 
 // Values
 pub fn derive_seed(UInt64, Int32) -> UInt64

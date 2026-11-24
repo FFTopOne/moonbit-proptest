@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moonbit-proptest/stateful"
+package "FFTopOne/moonbit-proptest/stateful"
 
 import {
-  "moonbit-community/moonbit-proptest/gen",
-  "moonbit-community/moonbit-proptest/prop",
+  "FFTopOne/moonbit-proptest/gen",
+  "FFTopOne/moonbit-proptest/prop",
 }
 
 // Values

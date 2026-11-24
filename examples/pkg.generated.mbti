@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moonbit-proptest/examples"
+package "FFTopOne/moonbit-proptest/examples"
 
 // Values
 pub fn is_sorted_public(Array[Int32]) -> Bool

@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbit-community/moonbit-proptest/gen"
+package "FFTopOne/moonbit-proptest/gen"
 
 import {
-  "moonbit-community/moonbit-proptest/rng",
-  "moonbit-community/moonbit-proptest/tree",
+  "FFTopOne/moonbit-proptest/rng",
+  "FFTopOne/moonbit-proptest/tree",
 }
 
 // Values
