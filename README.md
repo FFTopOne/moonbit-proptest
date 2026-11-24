@@ -115,7 +115,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
 
 moon version --all
-moon test                # 57 个测试
+moon test                # 84 个测试
 moon run cmd/main        # 缺陷演示报告
 ```
 
