@@ -1,4 +1,4 @@
 import {
-  "moonbit-community/moonbit-proptest/rng",
-  "moonbit-community/moonbit-proptest/tree",
+  "FFTopOne/moonbit-proptest/rng",
+  "FFTopOne/moonbit-proptest/tree",
 }

@@ -121,8 +121,8 @@ moon run cmd/main        # 缺陷演示报告
 
 ```moonbit
 import {
-  "moonbit-community/moonbit-proptest/gen" @gen,
-  "moonbit-community/moonbit-proptest/prop" @prop,
+  "FFTopOne/moonbit-proptest/gen" @gen,
+  "FFTopOne/moonbit-proptest/prop" @prop,
 }
 ```
 

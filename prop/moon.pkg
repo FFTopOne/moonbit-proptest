@@ -1,6 +1,6 @@
 import {
-  "moonbit-community/moonbit-proptest/gen",
-  "moonbit-community/moonbit-proptest/rng",
-  "moonbit-community/moonbit-proptest/shrink",
+  "FFTopOne/moonbit-proptest/gen",
+  "FFTopOne/moonbit-proptest/rng",
+  "FFTopOne/moonbit-proptest/shrink",
   "moonbitlang/core/debug",
 }
