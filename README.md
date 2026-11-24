@@ -165,6 +165,7 @@ let machine = @stateful.Machine::new(
   reset=fn() { cell[0] = 0 },
   generate=fn(state) { /* 依据模型状态生成合法命令 */ },
   apply=fn(state, cmd) { /* 推演模型 */ },
+  precondition=fn(state, cmd) { /* 该状态下这条命令是否合法 */ true },
   execute=fn(cmd) { /* 打到真实系统 */ },
   verify=fn(state) { /* 模型与真实系统比对 */ },
 )
