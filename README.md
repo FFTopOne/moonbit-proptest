@@ -1,3 +1,5 @@
+[![ci](https://github.com/FFTopOne/moonbit-proptest/actions/workflows/ci.yml/badge.svg)](https://github.com/FFTopOne/moonbit-proptest/actions/workflows/ci.yml)
+
 # moonbit-proptest
 
 给 MoonBit 的**整合式收缩**（integrated shrinking）属性测试与状态机测试库。
