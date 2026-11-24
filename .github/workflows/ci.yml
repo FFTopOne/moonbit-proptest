@@ -11,8 +11,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install MoonBit toolchain
+        # Pinned deliberately. The formatter's output changes between releases —
+        # 0.1.20261020 removes the trailing comma after the last enum field,
+        # later builds add it — so an unpinned CI would fail `moon fmt --check`
+        # on a repository that is correctly formatted for the toolchain the
+        # code was written against. Bump this together with a local `moon fmt`.
         run: |
-          curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
+          MOONBIT_INSTALL_VERSION=0.1.20261020 \
+            bash -c "$(curl -fsSL https://cli.moonbitlang.cn/install/unix.sh)"
           echo "$HOME/.moon/bin" >> "$GITHUB_PATH"
 
       - name: Toolchain versions
