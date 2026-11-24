@@ -9,10 +9,9 @@ import {
 // Values
 pub fn[S, C] check_machine(Machine[S, C], config? : @prop.Config) -> @prop.Outcome[Array[C]]
 
+pub fn demo_report() -> String
+
 // Errors
-pub suberror CounterMismatch {
-  CounterMismatch(String)
-}
 
 // Types and methods
 pub struct Machine[S, C] {
@@ -20,10 +19,11 @@ pub struct Machine[S, C] {
   reset : () -> Unit raise
   generate : (S) -> @gen.Gen[C]
   apply : (S, C) -> S
+  precondition : (S, C) -> Bool
   execute : (C) -> Unit raise
   verify : (S) -> Unit raise
 }
-pub fn[S, C] Machine::new(initial~ : S, reset~ : () -> Unit raise, generate~ : (S) -> @gen.Gen[C], apply~ : (S, C) -> S, execute~ : (C) -> Unit raise, verify~ : (S) -> Unit raise) -> Self[S, C]
+pub fn[S, C] Machine::new(initial~ : S, reset~ : () -> Unit raise, generate~ : (S) -> @gen.Gen[C], apply~ : (S, C) -> S, precondition~ : (S, C) -> Bool, execute~ : (C) -> Unit raise, verify~ : (S) -> Unit raise) -> Self[S, C]
 pub fn[S, C] Machine::run_sequence(Self[S, C], Array[C]) -> Unit raise
 pub fn[S, C] Machine::sequence(Self[S, C]) -> @gen.Gen[Array[C]]
 

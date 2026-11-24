@@ -1,4 +1,6 @@
 import {
   "moonbit-community/moonbit-proptest/gen",
   "moonbit-community/moonbit-proptest/prop",
+  "moonbit-community/moonbit-proptest/rng",
+  "moonbit-community/moonbit-proptest/tree",
 }

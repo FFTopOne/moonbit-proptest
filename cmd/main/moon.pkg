@@ -1,5 +1,6 @@
 import {
   "moonbit-community/moonbit-proptest/examples",
+  "moonbit-community/moonbit-proptest/stateful",
 }
 
 pkgtype(kind: "executable")

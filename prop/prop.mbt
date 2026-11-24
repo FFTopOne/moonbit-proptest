@@ -104,7 +104,9 @@ fn[T] probe(fails : (T) -> String?, value : T) -> String? {
 fn[T] probe_raise(property : (T) -> Unit raise Error, value : T) -> String? {
   let slot : Array[String?] = [None]
   try property(value) catch {
-    cause => slot[0] = Some(cause.to_string())
+    // Rendered through `Debug`, not `Error::to_string`: the latter yields only
+    // the constructor name and throws away the payload a `suberror` carries.
+    cause => slot[0] = Some(@debug.render(@debug.Debug::to_repr(cause)))
   } noraise {
     _ => ()
   }

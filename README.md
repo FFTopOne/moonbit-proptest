@@ -93,10 +93,11 @@ MoonBit 标准库已有 `moonbitlang/core/quickcheck`，提供 `Generator` / `Ar
 | 插入排序内层循环写成 `j >= 1`，下标 0 被冻住 | 结果有序 | `[1, 0]` |
 | RLE 编码 `if count > 1`，单次出现的元素被丢掉 | `decode(encode(xs)) == xs` | `[0]` |
 | 字符串反转跳过奇数长度的中间字符 | `rev(rev(s)) == s` | `" "` |
+| 计数器上限只在模型里生效 | 模型与实现逐步比对 | 10 条命令 → `[AddTo(2), Increment, Increment]` |
 
 跑 `moon run cmd/main` 可以看到完整报告。
 
-另外 `stateful` 里有个"减到负数"的计数器：模型说 0 减 1 还是 0，实现没有守卫。随机生成的 20 条命令，收缩后报出的是**单条 `Decrement`** —— 这就是序列收缩的意义。
+`stateful` 里有两个计数器：一个是"减到负数"（模型说 0 减 1 还是 0，实现没有守卫），收缩后报出**单条 `Decrement`**；另一个是"上限没生效"（模型在 3 饱和，实现继续加），需要三条命令才能触发，从固定长度 10 的随机序列收缩到 `[AddTo(2), Increment, Increment]`，6 步、21 个候选。后者才是删除命令的价值所在。
 
 对照组也写了：把 mutant 换回正确实现，同一个属性必须通过。否则失败可能来自属性本身写错，而不是被测代码。
 
@@ -112,7 +113,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang
 curl -fsSL https://cli.moonbitlang.cn/install/unix.sh | bash
 
 moon version --all
-moon test                # 54 个测试
+moon test                # 57 个测试
 moon run cmd/main        # 缺陷演示报告
 ```
 
@@ -168,7 +169,11 @@ let machine = @stateful.Machine::new(
 let outcome = @stateful.check_machine(machine, config=@prop.Config::new(count=200))
 ```
 
-命令用 `flat_map` 链式派生，所以收缩时删除或简化任意一条命令，后面的命令会依据新模型状态重新生成 —— 序列始终内部自洽，不会退化成"生成器根本产不出"的前缀。
+序列的收缩树在 `draw` 之后单独建立，每个节点提供三类候选：**删除任意位置的一条命令**、**砍掉后半段**、**原地简化某条命令**。删除排在最前，因为读者要的是最短的失败序列，而不是同样长但参数更小的序列。
+
+删除之所以安全，靠的是 `precondition`：被删命令导致后续命令失去前提时，`run_sequence` 会跳过它，而不是盲目执行。没有这一层，删命令就可能造出一个"失败但与原缺陷无关"的序列。
+
+> 第一版是用 `flat_map` 把命令链式串起来的，指望依赖式收缩自动带来序列收缩。结果演示里 `steps=0`：命令生成器是 `Gen::pure`，本身没有子节点，整棵序列树退化成叶子，**一条命令也删不掉**。`docs/DESIGN.md` §7 记录了这个过程和修法。
 
 ---
 
@@ -200,7 +205,8 @@ let outcome = @stateful.check_machine(machine, config=@prop.Config::new(count=20
 - **收缩是局部最小，不是全局最小。** 贪心只保证"任何一个直接子节点都不会再失败"。全局最小在无限树上不可判定，Hedgehog / Hypothesis 也都是这个取舍。
 - **`filter` 可能丢失收缩空间。** 若某个节点的所有直接子节点都违反谓词，它就成了叶子，收缩到此为止。硬约束优先用 `map` / `flat_map` 结构化表达，`filter` 只用于宽松约束。
 - **`filter` 会重试，重试耗尽则整轮 discard。** 谓词太紧时返回 `GaveUp`，不会报一个假失败。
-- **序列收缩是逐条简化，不做块级重排。** 对偶发竞态类的缺陷，需要更长的序列才有机会命中。
+- **序列删除依赖 `precondition` 声明。** 若某条命令有隐含前提却没写进 `precondition`，删掉前置命令后它会被照常执行，可能报出一个语义已经变了的序列。
+- **只做单条删除和折半，不做块级重排。** 对偶发竞态类的缺陷，需要更长的序列才有机会命中。
 - **尚未实现**：覆盖率引导的模糊测试、收缩统计的自动化门禁（`collect` / `classify` 风格的分布断言）。
 
 ---
